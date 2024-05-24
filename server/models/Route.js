@@ -30,9 +30,11 @@ const RouteSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        placesInfo : {
+            type: Array,
+        },
         places:{
             type: Array,
-            required: true,
         },
         stations: {
             type: Array,

@@ -36,11 +36,13 @@ export const getAll = async (req, res) => {
 export const getOneByStationName = async (req, res) => {
     try {
         const stationName = req.params.stationName;
+        const date = req.params.date;
         
         StationModel.findOne(
             {
                 stationName: stationName,
             })
+            .and({ $or : [{'date' : date} , { 'date' : "everyday"}]})
             .then((doc) => (doc != null) ? res.json(doc) : res.json("Cтанції не існує"))
             .catch(err => res.status(500).json({ message: "Станцію не найдено" }))
 

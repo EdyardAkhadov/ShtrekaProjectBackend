@@ -2,11 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors'
 
-import {registerValidation, loginValidation, postCreateValidation, stationCreateValidation, testCreateValidation, routeCreateValidation, ticketCreateValidation} from './server/validations/validations.js';
+import {registerValidation, loginValidation, stationCreateValidation, testCreateValidation, routeCreateValidation, ticketCreateValidation} from './server/validations/validations.js';
 import {checkAuth, handleValidationErrors} from './server/midleware/indexMidleware.js';
 import {
     UserController,
-    PostController, 
     StationController, 
     TestController, 
     RouteController,
@@ -33,7 +32,10 @@ app.get('/auth/me', checkAuth, UserController.getMe)
 
 app.post('/route', routeCreateValidation, handleValidationErrors, RouteController.create);
 app.get('/route', RouteController.getAll);
+app.get('/route/:routeId', RouteController.getOne);
+app.patch('/routeOne/:routeId/:wagonNum/:seatNum', RouteController.routeWagonFind);
 app.get('/route/:departureStation/:arrivalStation', RouteController.getOneByRouteName);
+app.get('/routes/:fromStation/:toStation/:date', RouteController.getByStations);
 
 app.post('/ticket', checkAuth, ticketCreateValidation, handleValidationErrors , TicketController.create);
 app.get('/tickets', checkAuth, TicketController.getAll);
@@ -46,13 +48,7 @@ app.get('/test/:name', TestController.getOneByTestName);
 
 app.post('/stations', stationCreateValidation, handleValidationErrors, StationController.create);
 app.get('/stations', StationController.getAll);
-app.get('/stations/:stationName', StationController.getOneByStationName);
-
-app.get('/posts', PostController.getAll);
-app.get('/posts/:id', PostController.getOne);
-app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors , PostController.create);
-app.delete('/posts/:id',checkAuth, PostController.remove);
-app.patch('/posts/:id',checkAuth, handleValidationErrors , PostController.update);
+app.get('/stations/:stationName/:date', StationController.getOneByStationName);
 
 app.listen(4444, (err)=>{
     if(err){

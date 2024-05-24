@@ -31,12 +31,13 @@ export const routeCreateValidation = [
     body('departureStation', 'Введіть станцію відправки!').isString(),
     body('departureTime', 'Введіть час на станцію відправки!').isString(),
     body('arrivalStation', 'ведіть станцію прибуття!').isString(),
-    body('arrivalTime', 'Введіть час на станцію прибуття!').optional().isString(),
+    body('arrivalTime', 'Введіть час на станцію прибуття!').isString(),
     body('date', 'Введіть дату!').isString(),
     body('trainNumber', 'Введіть номкр потягу!').isString(),
     body('trainType', 'Неправильний тип поїзда!').isString(),
-    body('places', 'Невірно вказані місця!'),
+    body('places', 'Невірно вказані місця!').optional(),
     body('stations', 'Невірно вказані станції!'),
+    body('placesInfo', 'Невірно вказані дані!').optional(),
 ];
 
 export const ticketCreateValidation = [
